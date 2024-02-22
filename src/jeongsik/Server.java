@@ -18,8 +18,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class Server {
-	public static void main(String[] args) {
+	public static void main(String[] args) { 
 		final int PORT = 9000;
+		
+		// 서버 전체에서 모든 클라이언트의 소켓을 관리하는 데 사용
 		Hashtable<String, Socket> clientHt = new Hashtable<>(); // 접속자를 관리하는 테이블
 
 		try {
@@ -42,8 +44,11 @@ public class Server {
 }
 class WorkerThread extends Thread {
 	private Socket socket;
+	
+	// 각 WorkerThread가 자신이 처리하는 클라이언트의 소켓을 관리하는데 사용
 	private Hashtable<String, Socket> ht;
 
+	// WorkerThread 객체를 초기화할때 사용하는 생성자
 	public WorkerThread(Socket socket, Hashtable<String, Socket> ht) {
 		this.socket = socket;
 		this.ht = ht;
@@ -69,8 +74,12 @@ class WorkerThread extends Thread {
 				/*json패킷을 해석해서 알맞은 처리를 한다.
 				 * 문자열 -> JSONObject 변환 -> cmd를 해석해서 어떤 명령인지?
 				 * */
+				
+				// 읽어온 문자열 데이터를 JSON 객체로 변환
 				JSONObject packetObj = new JSONObject(line);
+				
 				// 명령(cmd)당 알맞은 처리를 해줌
+				// 변환된 JSON 객체를 처리하는 processPacket 메서드를 호출합, 이 메서드는 클라이언트의 요청에 따라 적절한 작업을 수행
 				processPacket(packetObj);
 				
 			}
@@ -80,9 +89,13 @@ class WorkerThread extends Thread {
 	}
 	
 	private void processPacket(JSONObject packetObj) throws IOException {
+		
 		// 클라이언트에 응답을 하기 위한 json 오브젝트
 		JSONObject ackObj = new JSONObject();
+		
 		// 어떤 종류의 패킷을 보냈는지 분류하기 위한 정보
+		// Client에서 정한 키가 cmd이고 옆에 값들이 가각 "ID", ARITH"등등이 있고 그 값들을 불러 오는 값이 "cmd"이다.
+		// JSON 객체 'packetObj'에서 가져온 "cmd" 필드의 값이 저장
 		String cmd = packetObj.getString("cmd");
 		
 		// id 등록 요청

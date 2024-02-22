@@ -36,7 +36,6 @@ public class Client {
 			System.out.print("접속할 Port >> ");
 			PORT = Integer.parseInt(scan.nextLine());
 		}
-		
 		try {
 			// 서버를 주소를 찾아서 연결
 			socket = new Socket(IP, PORT);
@@ -60,8 +59,7 @@ public class Client {
 				if(Client.mainState!=ClientState.NONE) {
 					Thread.sleep(10);
 					continue;
-				}
-				
+				}	
 				int sel = getSelectMenu(scan);
 				switch(sel) {
 				case Menu.ALL_CHAT:
@@ -93,8 +91,7 @@ public class Client {
 					e.printStackTrace();
 				}		
 			if(scan!=null) scan.close();
-		}
-		
+		}	
 	}
 	
 	public static void sendQuit(PrintWriter pw, String id) {
@@ -163,8 +160,7 @@ public class Client {
 			}
 		
 		}		
-	}
-	
+	}	
 	public static void sendAllChat(Scanner sc, PrintWriter pw, String id) throws InterruptedException {
 		Client.mainState = ClientState.STATE_ALL_CHAT;
 		boolean isRun = true;
@@ -177,8 +173,7 @@ public class Client {
 				isRun = false;
 				Client.mainState = ClientState.NONE;
 				break;
-			}				
-			
+			}							
 			JSONObject packetObj = new JSONObject();
 			packetObj.put("cmd", "ALLCHAT");
 			packetObj.put("id", id);
@@ -189,7 +184,6 @@ public class Client {
 			pw.println(packet);
 			pw.flush();			
 		}
-
 	}
 	
 	 /*   3-2) 사칙 연산
@@ -358,12 +352,3 @@ class ReceiveThread extends Thread{
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
