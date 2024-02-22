@@ -1,0 +1,14 @@
+package jeongsik;
+
+public enum ClientState {
+	NONE,
+	STATE_ID,
+	STATE_ALL_CHAT,
+	STATE_ONE_CHAT_1,
+	STATE_ONE_CHAT_2,
+	STATE_ONE_CHAT_QUIT,
+	STATE_UNI_CHAT,
+	STATE_ARITH,
+	STATE_REQIDLIST,
+	STATE_QUIT
+}
